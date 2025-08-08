@@ -24,8 +24,8 @@ return new class extends Migration
             $table->unsignedInteger('number_of_visitors')->default(0);
             $table->boolean('accept_promo_code')->default(false);
             $table->text('about')->nullable();
-            $table->decimal('fee', 8, 2);
-            $table->string('waiting_time');
+            $table->decimal('fee', 8, 2)->nullable();
+            $table->string('waiting_time')->nullable();
             $table->string('city')->nullable();
             $table->string('phone')->nullable();
             $table->integer('experience_years')->nullable();
