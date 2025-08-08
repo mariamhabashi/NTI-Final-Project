@@ -21,6 +21,7 @@
             background-color: #fdfaf6;
             color: #000000;
             font-family: 'Cabin', sans-serif;
+                overflow-x: hidden;
         }
 
         #mainNavigation {
@@ -124,6 +125,7 @@
             padding: 30px ;
         }
         .card-body {
+            margin: 20px;
             padding: 20px;
         }
         .card-title {
