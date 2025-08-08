@@ -1,215 +1,110 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Vezeeta</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <title>@yield('title', 'Vezeeta')</title>
     <link rel="icon" href="{{ asset('storage/img/vezeeta_logo.jpg') }}" type="image/jpeg">
-
 
     <!-- Bootstrap & Fonts -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Cabin:wght@400;600&display=swap" rel="stylesheet">
+
     <style>
-        *{
-            margin: 0px;
-            padding: 0px;
-        }
+        * { box-sizing: border-box; }
         body {
-            background-color: #fdfaf6;
-            color: #000000;
+            background-color: #fbf7f3; /* soft cream */
+            color: #222;
             font-family: 'Cabin', sans-serif;
+            -webkit-font-smoothing: antialiased;
         }
 
+        /* NAVBAR */
         #mainNavigation {
-            background-color:rgb(0, 112, 205);
-            padding: 15px 10px;
+            background-color: #0070cd;
         }
-
-        .navbar-brand span {
-            color: #fff;
-            font-size: 20px;
+        #mainNavigation .navbar-brand img {
+            height: 44px;
         }
-
-        .nav-item a {   
-            font-size: 20px;
-            padding: 100px
+        #mainNavigation .nav-link {
             color: #fff;
+            font-size: 15px;
+            padding: 10px 14px;
             font-weight: 500;
-            justify-content: space-between;
+        }
+        #mainNavigation .nav-link:hover,
+        #mainNavigation .nav-link.active {
+            color: #c7bfd9;
         }
 
-        .nav-item a:hover,
-        .nav-item .active {
-            color: #c7bfd9 !important;
-        }
-
-        .dropdown-menu {
-            background-color: #b8c9b8;
-        }
-
-        .dropdown-item:hover {
-            background-color: #c7bfd9;
-            color: #fff !important;
-        }
-        /* .product-image {
-            height: 300px;            
-            object-fit: cover;        
-            width: 100%;              
-            border-radius: 8px;      
-        }
-        .brand-slider {
-        overflow: hidden;
-        white-space: nowrap;
-        /* background-color: #b8c9b8; light pink for Youstique */
-        /* padding: 20px 0; */
-        /* } */ 
-
-        /* .logo-group {
-        display: inline-block;
-        animation: slide 20s linear infinite;
-        }
-
-        .logo-group i {
-        font-size: 2.5rem;
-        margin: 0 40px;
-        color: #000000; /* Youstique main color */
-        /* transition: transform 0.3s ease;
-        } */
-
-        /* .logo-group i:hover { 
-        transform: scale(1.2);
-        color: #a61e62;
-        } */
-/* 
-        form {
-            margin: 25px ;
-            background-color: #fff;
-            border-radius: 10px;
-            width: 100%;
-        } */
-        form h5{
-            margin-bottom: 20px;
-            background-color: rgb(0, 112, 205);
-            color: #fff;
-            padding: 10px;
-            border-radius: 5px;
-        }
-        .all-specialties {
-            padding: 20px;
-            background-color: #f8f9fa;
-        }
-        .all-specialties h4 {
-            margin-bottom: 20px;
-            color: #333;
-        }
-        .card {
-            margin: 20px;
-            width: 1000px;
+        /* SPECIFIC CARD FOR REGISTER (don't override all .card) */
+        .register-card {
+            max-width: 880px;      /* control width */
+            margin: 36px auto;     /* center */
             border-radius: 12px;
-            overflow: hidden;
-            padding: 20px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-        }
-        .card img {
-            border-radius: 12px 12px 0 0;
-            width: 25%;
-            height: 25%;
-            padding: 30px ;
-        }
-        .card-body {
-            padding: 20px;
-        }
-        .card-title {
-            font-size: 1.25rem;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-        .card-text {
-            color: #666;
-            margin-bottom: 15px;
-        }
-
-
-        footer {
-            background-color: #bbc9bb;
-        }
-        .filter-sidebar {
+            padding: 28px;
+            box-shadow: 0 8px 26px rgba(16,24,40,0.06);
             background: #fff;
-            border-radius: 12px;
-            box-shadow: 0 2px 16px 0 rgba(0,0,0,0.07);
-            border: 1px solid #e3e3e3;
-            padding: 0;
-            margin: 0;
         }
-        .filter-header {
-            background: #0070cd;
-            color: #fff;
+
+        /* form visuals */
+        .register-card h3 {
             font-weight: 600;
-            font-size: 1.2rem;
-            padding: 18px 24px;
-            border-top-left-radius: 12px;
-            border-top-right-radius: 12px;
-            margin-bottom: 0;
+            margin-bottom: 18px;
+            color: #222;
         }
-        #filtersAccordion {
-            border-bottom-left-radius: 12px;
-            border-bottom-right-radius: 12px;
-            padding: 0 16px 16px 16px;
-        }
-        .accordion-item {
+        .btn-facebook {
+            background-color: #3b5998;
             border: none;
-            border-bottom: 1px solid #e3e3e3;
-        }
-        .accordion-item:last-child {
-            border-bottom: none;
-        }
-        .accordion-button {
-            background: none;
-            font-weight: 500;
-            color: #0070cd;
-            padding-left: 0;
-        }
-        .accordion-button:not(.collapsed) {
-            color: #0070cd;
-            background: none;
-            box-shadow: none;
-        }
-        .accordion-body {
-            padding-left: 0;
-            padding-right: 0;
-        }
-        .btn-search {
-            background: #0070cd;
-            color: #fff;
             font-weight: 600;
             border-radius: 8px;
-            margin-top: 12px;
+            padding: 10px 14px;
         }
-        .btn-search:hover {
-            background: #005fa3;
-            color: #fff;
+        .btn-facebook:hover { background-color: #324b81; }
+
+        .or-divider {
+            display: flex;
+            align-items: center;
+            gap: .75rem;
+            margin: 22px 0;
+            color: #6b6b6b;
         }
-        
+        .or-divider::before,
+        .or-divider::after {
+            content: "";
+            height: 1px;
+            background: #e6e6e6;
+            flex: 1;
+        }
+
+        .form-control {
+            border-radius: 8px;
+            padding: 10px 12px;
+            box-shadow: none;
+        }
+
+        .btn-primary, .btn-danger {
+            border-radius: 8px;
+        }
+
+        /* fix for smaller screens */
+        @media (max-width: 576px) {
+            .register-card { margin: 18px 12px; padding: 18px; }
+            #mainNavigation .nav-link { font-size: 14px; padding: 8px 10px; }
+        }
     </style>
 </head>
 <body>
-    
+
 @include('parts.navbar')
 
-@yield('content')
+<main>
+    @yield('content')
+</main>
 
 @include('parts.footer')
 
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
 </body>
 </html>
-
