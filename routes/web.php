@@ -41,4 +41,10 @@ Route::prefix('admin')->group(function () {
     Route::delete('/doctors/delete/{id}', [AdminDoctorController::class, 'destroy'])->name('admin.doctors.delete');
 });
 
-require __DIR__.'/auth.php';
+
+Route::get('/book', [AppointmentController::class, 'create'])->name('book.form');
+Route::post('/book', [AppointmentController::class, 'book'])->name('book.store');
+Route::get('/booking/{id}', [AppointmentController::class, 'showBookingForm'])->name('booking.show');
+
+
+//require __DIR__.'/auth.php';

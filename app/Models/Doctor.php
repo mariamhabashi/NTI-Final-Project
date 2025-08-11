@@ -26,6 +26,12 @@ class Doctor extends Model
         'phone',
         'experience_years',
     ];
-    
+
+    public function clinics()
+    {
+        return $this->hasMany(Clinic::class);
+    }
+
+
 
 }

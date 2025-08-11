@@ -124,6 +124,35 @@
             .register-card { margin: 18px 12px; padding: 18px; }
             #mainNavigation .nav-link { font-size: 14px; padding: 8px 10px; }
         }
+
+
+        /*booking form*/
+
+        .booking-form.card-header {
+            background-color: #0070CC;
+        }
+        .booking-form h5 {
+            font-size: 15px;
+        }
+
+        .booking-form .card-body {
+            margin: 5px 20px;
+            padding: 5px 20px;
+        }
+
+        .booking-form .card-body h6 {
+            font-size: 14px;
+        }
+
+        .booking-form .card-body h6 p {
+            margin-bottom: 10px;
+        }
+
+        .booking-form .fees, .booking-form .waiting-time, .booking-form .points {
+            font-size: 14px;
+            color: #808184;
+        }
+
     </style>
 </head>
 <body>
