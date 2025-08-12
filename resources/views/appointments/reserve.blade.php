@@ -7,6 +7,8 @@
                 </svg>
             </button>
 
+
+
 @foreach($dates as $date)
     <div class="day-card" id="selectedClinic">
         <div class="day-header">
@@ -14,28 +16,91 @@
         </div>
 
         @php
-            // Filter only slots for this date and not booked
 
             $slotsForThisDate = $slots->filter(function ($slot) use ($date, $clinicId) {
                 return \Carbon\Carbon::parse($slot->appointment_date)->isSameDay($date)
-                    && !$slot->is_booked
                     && $slot->clinic_id == $clinicId;
             });
         @endphp
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                document.querySelectorAll(".times").forEach(function(container) {
+                    const moreBtn = container.querySelector(".show-more");
+                    const extraSlots = container.querySelector(".extra-slots");
 
-        <div class=<div class="times">
-            @forelse($slotsForThisDate->take(6) as $slot)
-                <a href="{{ route('appointments.confirm', ['slot' => $slot->id]) }}" class="time-slot" style="display: inline-block; text-decoration: none;">
+                    if (moreBtn && extraSlots) {
+                        moreBtn.addEventListener("click", function() {
+                            extraSlots.style.display = "inline";
+                            moreBtn.style.display = "none";
+                        });
+                    }
+                });
+            });
+        </script>
+
+
+        <div class="times">
+            @php
+                $visibleSlots = $slotsForThisDate->take(6);
+                $hiddenSlots = $slotsForThisDate->slice(6);
+            @endphp
+
+{{--             First 6 slots --}}
+            @foreach($visibleSlots as $slot)
+                @if($slot->is_booked)
+                    <span class="time-slot booked-slot">
+                <del>{{ \Carbon\Carbon::parse($slot->start_time)->format('g:i A') }}</del>
+            </span>
+                @else
+                    <a href="{{ route('appointments.confirm', ['slot' => $slot->id]) }}"
+                       class="time-slot available-slot">
+                        {{ \Carbon\Carbon::parse($slot->start_time)->format('g:i A') }}
+                    </a>
+                @endif
+            @endforeach
+
+{{--             Hidden slots --}}
+            <span class="extra-slots" style="display: none;">
+        @foreach($hiddenSlots as $slot)
+                    @if($slot->is_booked)
+                        <span class="time-slot booked-slot">
+                    <del>{{ \Carbon\Carbon::parse($slot->start_time)->format('g:i A') }}</del>
+                </span>
+                    @else
+                        <a href="{{ route('appointments.confirm', ['slot' => $slot->id]) }}"
+                           class="time-slot available-slot">
                     {{ \Carbon\Carbon::parse($slot->start_time)->format('g:i A') }}
                 </a>
-            @empty
-                <div class="text-gray-500 italic">No available slots</div>
-            @endforelse
+                    @endif
+                @endforeach
+    </span>
 
+{{--             More button--}}
             @if($slotsForThisDate->count() > 6)
-                {{--                                            <a href="{{ route('appointments.slots', ['date' => $date]) }}" class="time-slot">More</a>--}}
+                <button class="show-more time-slot available-slot" style="border: none; background-color: white">More</button>
             @endif
         </div>
+
+
+
+{{--                <div class="times">--}}
+{{--            @forelse($slotsForThisDate->take(6) as $slot)--}}
+{{--                @if($slot->is_booked)--}}
+{{--                    <span class="time-slot booked-slot">--}}
+{{--                <del>{{ \Carbon\Carbon::parse($slot->start_time)->format('g:i A') }}</del>--}}
+{{--            </span>--}}
+{{--                @else--}}
+{{--                    <a href="{{ route('appointments.confirm', ['slot' => $slot->id]) }}"--}}
+{{--                       class="time-slot available-slot">--}}
+{{--                        {{ \Carbon\Carbon::parse($slot->start_time)->format('g:i A') }}--}}
+{{--                    </a>--}}
+{{--                @endif--}}
+{{--            @empty--}}
+{{--                <div class="text-gray-500 italic">No available slots</div>--}}
+{{--            @endforelse--}}
+
+
+{{--        </div>--}}
 
         <form action="{{ route('appointments.store') }}" method="POST">
             @csrf

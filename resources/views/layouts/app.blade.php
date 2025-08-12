@@ -272,6 +272,8 @@
             cursor: pointer;
             padding: 3px;
             transition: background 0.2s;
+            display: flex;
+            justify-self: center;
         }
         .time-slot:hover {
             background: #0070CC;
@@ -296,8 +298,29 @@
             font-weight: bold;
         }
 
+        .booked-slot {
+            color: #888;
+            pointer-events: none; /* disables click */
+            cursor: default; /* no pointer hand */
+            text-decoration: line-through;
+        }
 
-    /*.time-slot-input {*/
+        .available-slot {
+            text-decoration: none;
+        }
+        .show-more {
+            color: #0070CC;
+
+        }
+        .show-more:hover {
+            background: #0070CC !important;
+            color: white !important;
+        }
+
+
+
+
+        /*.time-slot-input {*/
         /*    display: none;*/
         /*}*/
 
