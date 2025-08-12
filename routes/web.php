@@ -46,5 +46,11 @@ Route::get('/book', [AppointmentController::class, 'create'])->name('book.form')
 Route::post('/book', [AppointmentController::class, 'book'])->name('book.store');
 Route::get('/booking/{id}', [AppointmentController::class, 'showBookingForm'])->name('booking.show');
 
+Route::post('/appointments', [AppointmentController::class, 'store'])
+    ->name('appointments.store');
+
+Route::post('/appointments/book-slot', [AppointmentController::class, 'bookSlot'])
+    ->name('appointments.bookSlot');
+
 
 //require __DIR__.'/auth.php';

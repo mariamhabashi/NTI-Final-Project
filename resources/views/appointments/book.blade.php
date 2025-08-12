@@ -70,122 +70,275 @@
                 </div>
                 <hr class="my-2">
 
-
-
-{{--                <div class="max-w-3xl mx-auto">--}}
-{{--                    <!-- Choose a clinic -->--}}
-{{--                    <div class="flex items-center justify-between border-b pb-2 mb-4">--}}
+{{--                 <!-- Choose a clinic -->--}}
+{{--                    <div class="flex items-center justify-between border-b pb-2 mb-2">--}}
 {{--                        <div class="flex items-center space-x-2">--}}
 {{--                            <i class="fas fa-map-marker-alt text-blue-500"></i>--}}
 {{--                            <span style="font-size: 12px; font-weight: bold; color: #74746F ">Choose a clinic</span>--}}
 {{--                        </div>--}}
 {{--                    </div>--}}
 
-{{--                    <!-- Location Tabs -->--}}
-{{--                    <div class="flex items-center justify-between border-b pb-2 mb-4">--}}
-{{--                        <button class="text-gray-400">--}}
-{{--                            <i class="fas fa-chevron-left"></i>--}}
-{{--                        </button>--}}
-{{--                        <span class="font-semibold text-blue-600 border-b-2 border-blue-600 pb-1">Heliopolis</span>--}}
-{{--                        <button class="text-gray-400">--}}
-{{--                            <i class="fas fa-chevron-right"></i>--}}
-{{--                        </button>--}}
-{{--                    </div>--}}
 
-{{--                    <!-- Clinic Info -->--}}
-{{--                    <div class="flex items-start space-x-2 mb-6">--}}
-{{--                        <i class="fas fa-map-marker-alt text-blue-500"></i>--}}
-{{--                        <div>--}}
-{{--                            <p class="text-gray-700">Heliopolis : botros ghali street</p>--}}
-{{--                            <p class="text-sm text-gray-500 font-semibold">--}}
-{{--                                Book now to receive the clinic’s address details and phone number--}}
-{{--                            </p>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
+                <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        const container = document.querySelector('.horizontal-scroll-container');
+                        const scrollLeftBtn = document.getElementById('scrollLeftBtn');
+                        const scrollRightBtn = document.getElementById('scrollRightBtn');
+                        const itemWidth = container.querySelector('.card').offsetWidth + 16;
 
-{{--                @if($doctor->clinics->count() > 0)--}}
-{{--                    <div class="border-b mb-3">--}}
-{{--                        <!-- Title -->--}}
-{{--                        <div class="flex items-center text-gray-600 mb-2">--}}
-{{--                            <i class="fas fa-map-marker-alt text-blue-500 mr-2"></i>--}}
-{{--                            <span class="font-medium" style="font-size: 12px; font-weight: bold; color: #74746F ">Choose a clinic</span>--}}
-{{--                        </div>--}}
+                        scrollLeftBtn.addEventListener('click', () => {
+                            container.scrollBy({ left: -itemWidth , behavior: 'smooth' });
+                        });
 
-{{--                        <!-- Clinic Tabs Navigation -->--}}
-{{--                        <div class="flex items-center justify-between">--}}
-{{--                            <!-- Left Arrow -->--}}
-{{--                            <button type="button" class="text-gray-400 px-2" id="clinic-prev">--}}
-{{--                                <i class="fas fa-chevron-left"></i>--}}
-{{--                            </button>--}}
+                        scrollRightBtn.addEventListener('click', () => {
+                            container.scrollBy({ left: itemWidth , behavior: 'smooth' });
+                        });
 
-{{--                            <!-- Tabs -->--}}
-{{--                            <div class="flex space-x-6 overflow-x-auto scrollbar-hide" id="clinic-tabs">--}}
-{{--                                @foreach($doctor->clinics as $index => $clinic)--}}
-{{--                                    <button--}}
-{{--                                        class="pb-1 text-base font-semibold whitespace-nowrap--}}
-{{--                               {{ $index === 0 ? 'text-blue-600 border-b-2 border-blue-600' : 'text-blue-400' }}"--}}
-{{--                                        onclick="selectClinic({{ $clinic->id }})"--}}
-{{--                                        data-clinic-id="{{ $clinic->id }}"--}}
-{{--                                    >--}}
-{{--                                        {{ $clinic->clinic_name }}--}}
-{{--                                    </button>--}}
-{{--                                @endforeach--}}
+                        // Clinic selection logic
+                        const clinicCards = document.querySelectorAll('.clinic-name');
+                        const selectedClinic = document.getElementById('selectedClinic');
+                        const clinicLocation = document.getElementById('clinicLocation');
+
+                        clinicCards.forEach(card => {
+                            card.addEventListener('click', function () {
+                                const name = this.getAttribute('data-name');
+                                const city = this.getAttribute('data-city');
+                                const address = this.getAttribute('data-address');
+
+                                // ✅ Update only the location text
+                                clinicLocation.textContent = `${city} : ${address}`;
+
+                                // ✅ Highlight selected card
+                                clinicCards.forEach(c => c.classList.remove('selected-clinic'));
+                                this.classList.add('selected-clinic');
+                            });
+                        });
+                    });
+                </script>
+                @if($doctor->clinics->count() > 1)
+                    <!-- Choose a clinic -->
+                    <div class="flex items-center justify-between border-b pb-2 mb-2">
+                        <div class="flex items-center space-x-2">
+                            <div class="p-3 d-flex align-items-start" style="vertical-align: middle">
+                                <!-- Location icon -->
+                                <div class="me-2">
+                                    <svg style="color: #0070CC" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
+                                        <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A32 32 0 0 1 8 14.58a32 32 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10"/>
+                                        <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4m0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
+                                    </svg>
+                                    <div style="height:3px; background-color:red; width:10px; margin:4px auto;"></div>
+                                </div>
+
+                                <!-- Text content -->
+                                    <div style="color: #74746F; font-size: 14px; vertical-align: middle;">
+                                    Choose a clinic
+                                </div>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center clinics-bar">
+                        <button class="btn btn-primary me-2" id="scrollLeftBtn">&lt;</button>
+                        <div class="horizontal-scroll-container flex-grow-1 overflow-auto d-flex flex-nowrap">
+                            @foreach($doctor->clinics as $index => $clinic)
+                                <div class="card flex-shrink-0 me-3 clinic-name"
+                                     data-name="{{ $clinic->clinic_name }}"
+                                     data-city="{{ $clinic->clinic_city }}"
+                                     data-address="{{ $clinic->clinic_address }}"
+                                     style="width: 50%;">
+                                    <span>{{$clinic->clinic_name}}</span>
+                                </div>
+                            @endforeach
+                        </div>
+                        <button class="btn btn-primary ms-2" id="scrollRightBtn">&gt;</button>
+                    </div>
+                    <hr class="my-2">
+                    <div id="selectedClinic" class="mt-2" style="font-size: 14px; font-weight: bold; color: #333;">
+                        <div class="p-3 d-flex align-items-start">
+                            <!-- Location icon -->
+                            <div class="me-2">
+                                <svg style="color: #0070CC" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
+                                    <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A32 32 0 0 1 8 14.58a32 32 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10"/>
+                                    <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4m0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
+                                </svg>
+                                <div style="height:3px; background-color:red; width:10px; margin:4px auto;"></div>
+                            </div>
+
+                            <!-- Text content -->
+                            <div class="clinic-info">
+                                <div class="clinic-location" id="clinicLocation">
+                                    {{$clinic->clinic_city}} : {{$clinic->clinic_address}}
+                                </div>
+                                <div class="book-now">
+                                    Book now to receive the clinic’s address details and phone number
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @elseif($doctor->clinics->count() == 1)
+                    <div id="selectedClinic" class="mt-2" style="font-size: 14px; font-weight: bold; color: #333;">
+                        <div class="p-1 d-flex align-items-start">
+                            <!-- Location icon -->
+                            <div class="me-2">
+                                <svg style="color: #0070CC" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
+                                    <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A32 32 0 0 1 8 14.58a32 32 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10"/>
+                                    <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4m0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
+                                </svg>
+                                <div style="height:3px; background-color:red; width:10px; margin:4px auto;"></div>
+                            </div>
+
+                            <!-- Text content -->
+                            <div class="clinic-info">
+                                <div class="clinic-location" id="clinicLocation">
+                                    {{$doctor->clinics->first()->clinic_city}} : {{$doctor->clinics->first()->clinic_address}}
+                                </div>
+                                <div class="book-now">
+                                    Book now to receive the clinic’s address details and phone number
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+{{--                    <div id="selectedClinic" class="mt-2" style="font-size: 14px; font-weight: bold; color: #333;">{{$doctor->clinics->first()->clinic_name }}</div>--}}
+                @endif
+
+
+                <div class="appointment-container p-1">
+                    <p>Choose your appointment</p>
+                        <div class="days">
+                            <button class="btn btn-primary me-2 scroll-button" id="scrollLeftBtn">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0"/>
+                                </svg>
+                            </button>
+
+                            @foreach($dates as $date)
+                                <div class="day-card">
+                                    <div class="day-header">
+                                        {{ \Carbon\Carbon::parse($date)->isToday() ? 'Today' : \Carbon\Carbon::parse($date)->format('l, F j') }}
+                                    </div>
+
+                                    @php
+                                        // Filter only slots for this date and not booked
+                                        $slotsForThisDate = $availableSlots->filter(function ($slot) use ($date) {
+                                            return \Carbon\Carbon::parse($slot->appointment_date)->isSameDay($date)
+                                                && !$slot->is_booked;
+                                        });
+                                    @endphp
+
+                                    <div class="times">
+                                        @forelse($slotsForThisDate as $slot)
+                                            <div class="time-slot">
+                                                {{ \Carbon\Carbon::parse($slot->start_time)->format('g:i A') }}
+                                            </div>
+                                        @empty
+                                            <div class="text-gray-500 italic">No available slots</div>
+                                        @endforelse
+                                    </div>
+
+                                    <form action="{{ route('appointments.store') }}" method="POST">
+                                        @csrf
+                                        <input type="hidden" name="doctor_id" value="{{ $doctor->id }}">
+                                        <input type="hidden" name="date" value="{{ \Carbon\Carbon::parse($date)->format('Y-m-d') }}">
+                                        <button type="submit" class="book-btn">BOOK</button>
+                                    </form>
+                                </div>
+                            @endforeach
+
+
+
+{{--                            @foreach($dates as $date)--}}
+{{--                                <div class="day-card">--}}
+{{--                                    <div class="day-header">--}}
+{{--                                        {{ \Carbon\Carbon::parse($date)->isToday() ? 'Today' : \Carbon\Carbon::parse($date)->format('l, F j') }}--}}
+{{--                                    </div>--}}
+
+{{--                                    @php--}}
+{{--                                        $slotsForThisDate = $availableSlots->filter(function ($slot) use ($date) {--}}
+{{--                                            return \Carbon\Carbon::parse($slot->appointment_date)->isSameDay($date)--}}
+{{--                                                && !$slot->is_booked;--}}
+{{--                                        });--}}
+{{--                                    @endphp--}}
+
+{{--                                    <form action="{{ route('appointments.bookSlot') }}" method="POST">--}}
+{{--                                        @csrf--}}
+{{--                                        <input type="hidden" name="doctor_id" value="{{ $doctor->id }}">--}}
+{{--                                        <input type="hidden" name="date" value="{{ \Carbon\Carbon::parse($date)->format('Y-m-d') }}">--}}
+
+{{--                                        <div class="times">--}}
+{{--                                            @forelse($slotsForThisDate as $slot)--}}
+{{--                                                <label class="time-slot-label">--}}
+{{--                                                    <input type="radio" name="slot_id" value="{{ $slot->id }}" required>--}}
+{{--                                                    <span class="time-display">--}}
+{{--                                                        {{ \Carbon\Carbon::parse($slot->start_time)->format('g:i A') }}--}}
+{{--                                                    </span>--}}
+{{--                                                </label>--}}
+{{--                                            @empty--}}
+{{--                                                <div class="text-gray-500 italic">No available slots</div>--}}
+{{--                                            @endforelse--}}
+
+{{--                                        </div>--}}
+
+{{--                                        <button type="submit" class="book-btn">BOOK</button>--}}
+{{--                                    </form>--}}
+{{--                                </div>--}}
+{{--                            @endforeach--}}
+
+
+
+                            <!-- Day 1 -->
+{{--                            <div class="day-card">--}}
+{{--                                <div class="day-header">Today</div>--}}
+{{--                                <div class="times">--}}
+{{--                                    <div class="time-slot">4:00 PM</div>--}}
+{{--                                    <div class="time-slot">4:30 PM</div>--}}
+{{--                                    <div class="time-slot">5:00 PM</div>--}}
+{{--                                    <div class="time-slot">5:30 PM</div>--}}
+{{--                                    <div class="time-slot">6:00 PM</div>--}}
+{{--                                    <div class="time-slot">6:30 PM</div>--}}
+{{--                                    <a href="#" class="more-link">More</a>--}}
+{{--                                </div>--}}
+{{--                                <button class="book-btn">BOOK</button>--}}
 {{--                            </div>--}}
 
-{{--                            <!-- Right Arrow -->--}}
-{{--                            <button type="button" class="text-gray-400 px-2" id="clinic-next">--}}
-{{--                                <i class="fas fa-chevron-right"></i>--}}
-{{--                            </button>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-
-{{--                    <!-- Selected Clinic Info -->--}}
-{{--                    <div class="flex items-start space-x-2 mb-6" id="clinic-info">--}}
-{{--                        <i class="fas fa-map-marker-alt text-blue-500"></i>--}}
-{{--                        <div>--}}
-{{--                            <p class="text-gray-700">--}}
-{{--                                {{ $doctor->clinics[0]->clinic_city }} : {{ $doctor->clinics[0]->clinic_address }}--}}
-{{--                            </p>--}}
-{{--                            <p class="text-sm text-gray-500 font-semibold">--}}
-{{--                                Book now to receive the clinic’s address details and phone number--}}
-{{--                            </p>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-
-{{--                    <input type="hidden" name="clinic_id" id="selected-clinic" value="{{ $doctor->clinics[0]->id }}">--}}
-{{--                @else--}}
-{{--                    <p class="text-danger">This doctor has no clinics available.</p>--}}
-{{--                @endif--}}
-
-
-{{--                --}}{{-- Appointment Slots --}}
-{{--                <h5 class="text-center my-4">Choose your appointment</h5>--}}
-{{--                <div class="d-flex justify-content-center gap-3 flex-wrap">--}}
-
-{{--                    --}}{{-- Day Card --}}
-{{--                    @php--}}
-{{--                        $days = [--}}
-{{--                            'Today' => ['3:00 PM','3:30 PM','4:00 PM','4:30 PM','5:00 PM','5:30 PM'],--}}
-{{--                            'Tomorrow' => ['4:00 PM','4:30 PM','5:00 PM','5:30 PM','6:00 PM','6:30 PM'],--}}
-{{--                            'Wed 08/13' => ['4:00 PM','4:30 PM','5:00 PM','5:30 PM','6:00 PM','6:30 PM']--}}
-{{--                        ];--}}
-{{--                    @endphp--}}
-
-{{--                    @foreach ($days as $day => $times)--}}
-{{--                        <div class="border rounded p-3 text-center" style="min-width:150px;">--}}
-{{--                            <div class="bg-primary text-white rounded-top p-2">{{ $day }}</div>--}}
-{{--                            <div class="py-2">--}}
-{{--                                @foreach ($times as $time)--}}
-{{--                                    <div class="mb-1">{{ $time }}</div>--}}
-{{--                                @endforeach--}}
-{{--                                <a href="#" class="btn btn-danger w-100 mt-2">BOOK</a>--}}
+                            <!-- Day 2 -->
+{{--                            <div class="day-card">--}}
+{{--                                <div class="day-header">Tomorrow</div>--}}
+{{--                                <div class="times">--}}
+{{--                                    <div class="time-slot">4:00 PM</div>--}}
+{{--                                    <div class="time-slot">4:30 PM</div>--}}
+{{--                                    <div class="time-slot">5:00 PM</div>--}}
+{{--                                    <div class="time-slot">5:30 PM</div>--}}
+{{--                                    <div class="time-slot">6:00 PM</div>--}}
+{{--                                    <div class="time-slot">6:30 PM</div>--}}
+{{--                                    <a href="#" class="more-link">More</a>--}}
+{{--                                </div>--}}
+{{--                                <button class="book-btn">BOOK</button>--}}
 {{--                            </div>--}}
-{{--                        </div>--}}
-{{--                    @endforeach--}}
 
-{{--                </div>--}}
+                            <!-- Day 3 -->
+{{--                            <div class="day-card">--}}
+{{--                                <div class="day-header">Thu 08/14</div>--}}
+{{--                                <div class="times">--}}
+{{--                                    <div class="time-slot">4:00 PM</div>--}}
+{{--                                    <div class="time-slot">4:30 PM</div>--}}
+{{--                                    <div class="time-slot">5:00 PM</div>--}}
+{{--                                    <div class="time-slot">5:30 PM</div>--}}
+{{--                                    <div class="time-slot">6:00 PM</div>--}}
+{{--                                    <div class="time-slot">6:30 PM</div>--}}
+{{--                                    <a href="#" class="more-link">More</a>--}}
+{{--                                </div>--}}
+{{--                                <button class="book-btn">BOOK</button>--}}
+{{--                            </div>--}}
+                            <button class="btn btn-primary ms-2 scroll-button" id="scrollRightBtn">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16" >
+                                    <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708"/>
+                                </svg>
+                            </button>
+                        </div>
 
-{{--            </div>--}}
-        </div>
+                </div>
+
+
+
+            </div>
+
     </div>
 @endsection

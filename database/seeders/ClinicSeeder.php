@@ -16,7 +16,7 @@ class ClinicSeeder extends Seeder
         //
         Clinic::create([
             'doctor_id'    => 1,
-            'clinic_name'  => 'Downtown Medical Center',
+            'clinic_name'  => 'Downtown',
             'clinic_city'  => 'Cairo',
             'clinic_address'=> '123 Nile Street',
             'clinic_phone' => '0123456789',
@@ -24,7 +24,7 @@ class ClinicSeeder extends Seeder
 
         Clinic::create([
             'doctor_id'    => 1,
-            'clinic_name'  => 'Giza Health Clinic',
+            'clinic_name'  => 'Giza ',
             'clinic_city'  => 'Giza',
             'clinic_address'=> '456 Pyramid Road',
             'clinic_phone' => '0987654321',
@@ -32,7 +32,15 @@ class ClinicSeeder extends Seeder
 
         Clinic::create([
             'doctor_id'    => 1,
-            'clinic_name'  => 'Alex Health Clinic',
+            'clinic_name'  => 'Alex ',
+            'clinic_city'  => 'Alex',
+            'clinic_address'=> 'Syria Road',
+            'clinic_phone' => '0987654321',
+        ]);
+
+        Clinic::create([
+            'doctor_id'    => 2,
+            'clinic_name'  => 'Alex ',
             'clinic_city'  => 'Alex',
             'clinic_address'=> 'Syria Road',
             'clinic_phone' => '0987654321',
