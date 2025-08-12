@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Clinic;
 use App\Models\Doctor;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -12,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 
 class AppointmentController extends Controller
 {
+    // Shows the list of appointments for the logged-in user
     public function index() {
         $appointments = Appointment::with('doctor')
             ->where('user_id', auth()->id())
@@ -21,74 +23,19 @@ class AppointmentController extends Controller
         return view('appointments.index', compact('appointments'));
     }
 
-//    public function create()
-//    {
-//        return view('appointments.book');
-//    }
-
-//    public function book(Request $request) {
-//        $request->validate([
-//            'doctor_id' => 'required|exists:doctors,id',
-//            'appointment_date' => 'required|date|after_or_equal:today',
-//            'appointment_time' => 'required|date_format:H:i',
-//
-//        ]);
-//        $exists = Appointment::where('doctor_id', $request->doctor_id)
-//            ->where('date', $request->date)
-//            ->where('time', $request->time)
-//            ->exists();
-//
-//        if ($exists) {
-//            return back()->with('error', 'This slot is already booked.');
-//        }
-//
-//        Appointment::create([
-//            'doctor_id' => $request->doctor_id,
-//            'user_id' => auth()->id(),
-//            'appointment_date' => $request->date,
-//            'appointment_time' => $request->time,
-//        ]);
-//
-//        return back()->with('success', 'Appointment booked successfully!');
-
-//    }
-
-//    public function showBookingForm($id)
-//    {
-//        $doctor = Doctor::findOrFail($id);
-//        $days = collect(range(0, 2))->map(function ($i) use ($doctor) {
-//            $date = Carbon::today()->addDays($i)->toDateString();
-//
-//            $availableSlots = AppointmentSlot::where('doctor_id', $doctor->id)
-//                ->whereDate('appointment_date', $date)
-//                ->where('is_booked', false)
-//                ->orderBy('start_time')
-//                ->get();
-//
-//            return [
-//                'date'  => Carbon::today()->addDays($i),
-//                'slots' => $availableSlots
-//            ];
-//        });
-//
-//
-//        if (!$doctor) {
-//            return redirect()->back()->with('error', 'Doctor not found.');
-//        }
-//        return view('appointments.book', compact('doctor','days'));
-//    }
-
-    public function showBookingForm($id)
+    public function showBookingForm($doctorId, $clinicId)
     {
-        $doctor = Doctor::findOrFail($id);
+        // Displays the booking form for a specific doctor and specific clinic for the next 3 days
+        $doctor = Doctor::findOrFail($doctorId);
 
         // prepare 3 days (strings like "2025-08-12")
         $dates = collect(range(0, 2))
             ->map(fn($i) => Carbon::today()->addDays($i)->toDateString());
 
         // fetch only unbooked slots for these dates for this doctor
-        $availableSlots = AppointmentSlot::where('doctor_id', $doctor->id)
-            ->where('is_booked', false)
+        $slots = AppointmentSlot::where('doctor_id', $doctor->id)
+            ->where('clinic_id', $clinicId)
+//            ->where('is_booked', false)
             ->whereIn('appointment_date', $dates->toArray())
             ->orderBy('appointment_date')
             ->orderBy('start_time')
@@ -97,12 +44,28 @@ class AppointmentController extends Controller
 //        dd($availableSlots->first());
 
         // pass everything to the view
-        return view('appointments.book', compact('doctor', 'dates', 'availableSlots'));
+//        return view('appointments.book', compact('doctor', 'dates', 'slots', 'clinicId'));
+        return view('appointments.form', compact('doctor', 'dates', 'slots', 'clinicId'));
+
+    }
+
+    public function confirmBooking($slotId)
+    {
+        // Loads a single slot to confirm booking
+        $slot = AppointmentSlot::findOrFail($slotId);
+        $doctor = Doctor::findOrFail($slot->doctor_id);
+        $user = Auth::user();
+        $clinic = Clinic::findOrFail($slot->clinic_id);
+        return view('appointments.confirm', compact('slot','doctor', 'user', 'clinic'));
     }
 
 
-    public function book(Request $request)
+
+    public function store(Request $request)
     {
+
+
+        // books the appointment
         $request->validate([
             'slot_id' => 'required|exists:appointment_slots,id',
         ]);
@@ -115,11 +78,11 @@ class AppointmentController extends Controller
 
         // Create appointment record
         Appointment::create([
-            'user_id'             => auth()->id(),
-            'doctor_id'           => $slot->doctor_id,
-            'appointment_date'    => $slot->appointment_date,
-            'appointment_time'    => $slot->start_time,
+            'user_id' => '1',
+            'doctor_id' => $slot->doctor_id,
             'appointment_slot_id' => $slot->id,
+            'appointment_date' => $slot->appointment_date,
+            'appointment_time' => $slot->start_time,
         ]);
 
         // Mark slot as booked
@@ -129,38 +92,23 @@ class AppointmentController extends Controller
             ->with('success', 'Appointment booked successfully!');
     }
 
-    public function store(Request $request)
+
+    public function getSlotsByClinic(Request $request)
     {
-        // validate input
-        $validated = $request->validate([
-            'doctor_id' => 'required|exists:doctors,id',
-            'date' => 'required|date',
-        ]);
+        // Returns available slots for a specific clinic in JSON
+        $doctorId = $request->doctor_id;
+        $clinicId = $request->clinic_id;
+        $dates = $request->dates; // array of dates strings (Y-m-d)
 
-        // create appointment logic
-        Appointment::create($validated);
+        $slots = AppointmentSlot::where('doctor_id', $doctorId)
+            ->where('clinic_id', $clinicId)
+            ->where('is_booked', false)
+            ->whereIn('appointment_date', $dates)
+            ->orderBy('appointment_date')
+            ->orderBy('start_time')
+            ->get();
 
-        return redirect()->back()->with('success', 'Appointment booked successfully!');
-    }
-
-    public function bookSlot(Request $request)
-    {
-        $validated = $request->validate([
-            'doctor_id' => 'required|exists:doctors,id',
-            'date' => 'required|date',
-            'slot_id' => 'required|exists:appointment_slots,id',
-        ]);
-
-        $slot = AppointmentSlot::findOrFail($validated['slot_id']);
-
-        if ($slot->is_booked) {
-            return redirect()->back()->with('error', 'This slot is already booked.');
-        }
-
-        $slot->is_booked = true;
-        $slot->save();
-
-        return redirect()->back()->with('success', 'Slot booked successfully!');
+        return response()->json($slots);
     }
 
 

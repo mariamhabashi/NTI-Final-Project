@@ -246,6 +246,8 @@
 
         .day-card {
             /*width: 150px;*/
+            flex: 1 1 200px;
+            min-height: 350px;
             border: 1px solid #ddd;
             border-radius: 8px;
             overflow: hidden;
@@ -253,12 +255,14 @@
             flex-direction: column;
             justify-content: space-between;
             min-width: 100px;
+            background-color: white;
         }
         .day-header {
             background-color: #0066cc;
             color: white;
             padding: 5px;
             font-weight: bold;
+            font-size: 14px;
         }
         .times {
             padding: 10px;
@@ -270,7 +274,9 @@
             transition: background 0.2s;
         }
         .time-slot:hover {
-            background: #f0f0f0;
+            background: #0070CC;
+            color: white;
+            border-radius: 5px;
         }
 
         .more-link {
@@ -281,7 +287,7 @@
             cursor: pointer;
         }
         .book-btn {
-            background-color: red;
+            background-color: #EE0E0F;
             color: white;
             border: none;
             width: 100%;
@@ -290,7 +296,8 @@
             font-weight: bold;
         }
 
-        /*.time-slot-input {*/
+
+    /*.time-slot-input {*/
         /*    display: none;*/
         /*}*/
 

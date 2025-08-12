@@ -42,15 +42,19 @@ Route::prefix('admin')->group(function () {
 });
 
 
-Route::get('/book', [AppointmentController::class, 'create'])->name('book.form');
-Route::post('/book', [AppointmentController::class, 'book'])->name('book.store');
-Route::get('/booking/{id}', [AppointmentController::class, 'showBookingForm'])->name('booking.show');
+Route::get('/booking/{id}/{clinic_id}', [AppointmentController::class, 'showBookingForm'])->name('booking.show');
 
-Route::post('/appointments', [AppointmentController::class, 'store'])
+Route::post('/appointments/book', [AppointmentController::class, 'store'])
     ->name('appointments.store');
 
-Route::post('/appointments/book-slot', [AppointmentController::class, 'bookSlot'])
-    ->name('appointments.bookSlot');
+
+
+Route::post('/appointments/slots-by-clinic', [AppointmentController::class, 'getSlotsByClinic'])
+    ->name('appointments.slotsByClinic');
+
+
+Route::get('/appointments/confirm/{slot}', [AppointmentController::class, 'confirmBooking'])
+    ->name('appointments.confirm');
 
 
 //require __DIR__.'/auth.php';
