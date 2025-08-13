@@ -49,7 +49,7 @@
 
                 </div>
 
-                <hr class="my-2"> <!-- adds vertical spacing -->
+                <hr class="my-2">
 
 
                 {{-- Discount Banner --}}

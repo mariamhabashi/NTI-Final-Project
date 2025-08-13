@@ -49,8 +49,10 @@ Route::post('/appointments/book', [AppointmentController::class, 'store'])
 
 
 
-Route::post('/appointments/slots-by-clinic', [AppointmentController::class, 'getSlotsByClinic'])
-    ->name('appointments.slotsByClinic');
+//Route::post('/appointments/slots-by-clinic', [AppointmentController::class, 'getSlotsByClinic'])
+//    ->name('appointments.slotsByClinic');
+Route::get('/booking/{doctorId}/{clinicId}', [AppointmentController::class, 'getSlots'])
+    ->name('booking.slots');
 
 
 Route::get('/appointments/confirm/{slot}', [AppointmentController::class, 'confirmBooking'])

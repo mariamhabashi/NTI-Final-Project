@@ -48,7 +48,7 @@
 
                 </div>
 
-                <hr class="my-2"> <!-- adds vertical spacing -->
+                <hr class="my-2">
 
                 <div id="selectedClinic" class="mt-2" style="font-size: 14px; font-weight: bold; color: #333;">
                     <div class="p-3 d-flex align-items-start">
@@ -160,7 +160,10 @@
 
 
                     <button style="width: 30%; height: 40px; background-color: white; color: grey; cursor: pointer;  border: grey solid; border-radius: 5px">
-                        Cancel
+                        <a href="{{ url()->previous() }}"
+                           style="display: inline-block;border-radius: 5px; color: grey; text-decoration: none;">
+                            Cancel
+                        </a>
                     </button>
                 </div>
 

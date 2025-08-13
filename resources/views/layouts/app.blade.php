@@ -317,10 +317,20 @@
             color: white !important;
         }
 
+         .selected-clinic {
+             border-bottom:  solid #0065CC;
+
+             text-decoration: underline #0065CC;
+             font-weight: bolder;
+             text-underline-offset: 4px;
+             padding-bottom: 2px;
+         }
 
 
 
-        /*.time-slot-input {*/
+
+
+    /*.time-slot-input {*/
         /*    display: none;*/
         /*}*/
 

@@ -118,8 +118,10 @@
 </button>
 
 </div>
-    <hr class="my-2" style="color: #AAAAA8; font-weight: bolder;">
-    <div style="font-size: 14px; color: #ABABA9">Appointment reservation</div>
-    <hr class="my-2">
+    <div style="width: 100%">
+        <hr class="my-2" >
+        <div style="font-size: 14px; color: #ABABA9; display: block; width: 100%; padding: 10px">Appointment reservation</div>
+        <hr class="my-2">
+    </div>
 
 </div>

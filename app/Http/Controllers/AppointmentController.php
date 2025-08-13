@@ -93,23 +93,18 @@ class AppointmentController extends Controller
     }
 
 
-    public function getSlotsByClinic(Request $request)
+    public function getSlots($doctorId, $clinicId)
     {
-        // Returns available slots for a specific clinic in JSON
-        $doctorId = $request->doctor_id;
-        $clinicId = $request->clinic_id;
-        $dates = $request->dates; // array of dates strings (Y-m-d)
-
-        $slots = AppointmentSlot::where('doctor_id', $doctorId)
+        $doctor = Doctor::with('clinics')->findOrFail($doctorId);
+        $slots = Slot::where('doctor_id', $doctorId)
             ->where('clinic_id', $clinicId)
-            ->where('is_booked', false)
-            ->whereIn('appointment_date', $dates)
-            ->orderBy('appointment_date')
-            ->orderBy('start_time')
             ->get();
 
-        return response()->json($slots);
+        $dates = $slots->pluck('appointment_date')->unique();
+
+        return view('appointments.partials.slots', compact('dates', 'slots', 'clinicId'))->render();
     }
+
 
 
 }
