@@ -21,6 +21,7 @@ class LoginController extends Controller
         ]);
 
         if (Auth::attempt($credentials, $request->filled('remember'))) {
+            Auth::login(Auth::user());
             $request->session()->regenerate();
             return redirect()->intended('/');
         }
@@ -36,6 +37,6 @@ class LoginController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/home');
+        return redirect('/');
     }
 }

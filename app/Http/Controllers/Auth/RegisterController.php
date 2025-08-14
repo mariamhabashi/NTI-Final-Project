@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class RegisterController extends Controller
 {
@@ -34,8 +35,8 @@ class RegisterController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        auth()->login($user);
+        Auth::login($user);
 
-        return redirect('/login')->with('success', 'You\'ve been registered successfully!');
+        return redirect('home')->with('success', 'You\'ve been registered successfully!');
     }
 }

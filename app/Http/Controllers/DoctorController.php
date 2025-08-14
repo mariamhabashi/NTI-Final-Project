@@ -3,17 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Doctor;
+use App\Models\AppointmentSlot;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 
 class DoctorController extends Controller
 {
-    //
-    public function create()
-    {
-        return view('doctors.create');
-    }
 
     public function store(Request $request)
     {
@@ -36,12 +33,35 @@ class DoctorController extends Controller
         return redirect()->route('doctors.index')->with('success', 'Doctor added!');
     }
     public function index(){
-        $Doctors=Doctor::all();
+        $doctors=Doctor::all();
 
-        return view('doctors.specialist',compact('Doctors'));
+        // Fetch available slots for the next 7 days for each doctor
+        $availableSlots = [];
+        $futureDates = Carbon::today()->addDays(6)->toDateString(); // 7 days including today
+
+        foreach ($doctors as $doctor) {
+            // Get slots for this doctor that are unbooked and within the next 7 days
+            $slots = AppointmentSlot::where('doctor_id', $doctor->id)
+                ->where('is_booked', false)
+                ->where('appointment_date', '>=', Carbon::today()->toDateString())
+                ->where('appointment_date', '<=', $futureDates)
+                ->orderBy('appointment_date')
+                ->orderBy('start_time')
+                ->get();
+
+                // Group by date and take the first few slots (e.g., 3) for preview
+            $grouped = $slots->groupBy('appointment_date')->map(function ($dateSlots) {
+                        return $dateSlots->take(3);
+            });
+
+            $availableSlots[$doctor->id] = $grouped;
+        }
+
+        return view('doctors.index', compact('doctors', 'availableSlots'));
+
     }
-    public function showSingleDr($id){
-        $doctor=Doctor::find($id);
+    public function showSingleDr(Doctor $doctor){
+        
         return view('doctors.show',compact('doctor'));
 
     }

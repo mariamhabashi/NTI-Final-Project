@@ -5,7 +5,7 @@
     <h3 class="mb-4">My Appointments</h3>
 
     @if($appointments->isEmpty())
-        <div class="alert alert-info">You have no appointments.</div>
+        <div class="alert alert-info">You don't have any appointments yet, <span style="color: red" ><a href="{{ route('doctors.index') }}">Book</a></span></div>
     @else
         <div class="table-responsive">
             <table class="table table-bordered table-hover">
