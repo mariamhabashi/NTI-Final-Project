@@ -25,6 +25,7 @@ class Doctor extends Model
         'city',
         'phone',
         'experience_years',
+        'points',
     ];
 
     public function clinics()

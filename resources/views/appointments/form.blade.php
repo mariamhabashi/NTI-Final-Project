@@ -53,7 +53,7 @@
                             <img src="/public/images/icons/points_icon.png" alt="Points" style="height:40px;">
                             <div style="height:3px; background-color:orange; width:20px; margin:4px auto;"></div>
                             <div class="mt-auto">
-                                <span>You’ll earn <strong style="color: #30A635">100 points</strong></span>
+                                <span>You’ll earn <strong style="color: #30A635">{{$doctor->points}} points</strong></span>
                             </div>
                         </div>
 

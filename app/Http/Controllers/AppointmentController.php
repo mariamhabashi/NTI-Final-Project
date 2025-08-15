@@ -40,6 +40,7 @@ class AppointmentController extends Controller
             ->orderBy('appointment_date')
             ->orderBy('start_time')
             ->get();
+//        dd($doctor);
 
 //        dd($availableSlots->first());
 

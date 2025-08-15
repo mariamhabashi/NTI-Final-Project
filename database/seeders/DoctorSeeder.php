@@ -33,6 +33,7 @@ class DoctorSeeder extends Seeder
             'city'=>'cairo',
             'phone'=>'022',
             'experience_years'=>'3',
+            'points'=>'100',
         ],
          [
             'first_name'=>'Mohammed',
@@ -51,6 +52,7 @@ class DoctorSeeder extends Seeder
             'city'=>'cairo',
             'phone'=>'022',
             'experience_years'=>'3',
+             'points'=>'200',
         ],
          [
             'first_name'=>'Mohammed',
@@ -69,6 +71,7 @@ class DoctorSeeder extends Seeder
             'city'=>'cairo',
             'phone'=>'022',
             'experience_years'=>'3',
+             'points'=>'200',
         ],
          [
             'first_name'=>'Mohammed',
@@ -87,6 +90,7 @@ class DoctorSeeder extends Seeder
             'city'=>'cairo',
             'phone'=>'022',
             'experience_years'=>'3',
+             'points'=>'200',
         ],
          [
             'first_name'=>'Mohammed',
@@ -105,6 +109,7 @@ class DoctorSeeder extends Seeder
             'city'=>'cairo',
             'phone'=>'022',
             'experience_years'=>'3',
+             'points'=>'200',
         ],
          [
             'first_name'=>'Mohammed',
@@ -123,6 +128,7 @@ class DoctorSeeder extends Seeder
             'city'=>'cairo',
             'phone'=>'022',
             'experience_years'=>'3',
+             'points'=>'200',
         ],
          [
             'first_name'=>'Mohammed',
@@ -141,6 +147,7 @@ class DoctorSeeder extends Seeder
             'city'=>'cairo',
             'phone'=>'022',
             'experience_years'=>'3',
+             'points'=>'100',
         ],
     ];
 
