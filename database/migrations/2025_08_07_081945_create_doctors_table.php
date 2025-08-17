@@ -29,6 +29,7 @@ return new class extends Migration
             $table->string('city')->nullable();
             $table->string('phone')->nullable();
             $table->integer('experience_years')->nullable();
+            $table->integer('points')->nullable();
             $table->timestamps();
 
         });
