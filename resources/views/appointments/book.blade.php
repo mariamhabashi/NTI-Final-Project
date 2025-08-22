@@ -15,7 +15,10 @@
 
         {{-- Fees --}}
         <div class="fees">
-            <img src="/public/images/icons/fees_icon.png" alt="Fees" style="height:40px;">
+{{--            <img src="{{ asset('storage/img/vezeeta_logo.jpg') }}" alt="Logo">--}}
+{{--            <img src="/public/images/icons/fees_icon.png" alt="Fees" style="height:40px;">--}}
+            <img src="{{asset('storage/img/icons/fees_icon.png')}}" alt="Fees" style="height:40px;">
+
             <div style="height:3px; background-color:red; width:20px; margin:4px auto;"></div>
             <div class="mt-auto" style="color: #808184">
                 <span>Fees <strong style="color: #808184">{{$doctor->fee}}</strong></span>
@@ -24,7 +27,7 @@
 
         {{-- Points --}}
         <div class="points">
-            <img src="/public/images/icons/points_icon.png" alt="Points" style="height:40px;">
+            <img src="{{asset('storage/img/icons/points_icon.png')}}" alt="Points" style="height:40px;">
             <div style="height:3px; background-color:orange; width:20px; margin:4px auto;"></div>
             <div class="mt-auto">
                 <span>You’ll earn <strong style="color: #30A635">{{$doctor->points}} points</strong></span>
@@ -33,7 +36,7 @@
 
         {{-- Waiting Time --}}
         <div class="waiting-time">
-            <img src="/public/images/icons/waiting_time_icon.png" alt="Waiting Time" style="height:40px;">
+            <img src="{{asset('storage/img/icons/waiting_time_icon.png')}}" alt="Waiting Time" style="height:40px;">
             <div style="height:3px; background-color:green; width:20px; margin:4px auto;"></div>
             <div class="mt-1" style="color: #6ACF7F">
                 <span>Waiting Time : {{$doctor->waiting_time}}</span>
@@ -51,7 +54,7 @@
 
         {{-- Left side: icon + text --}}
         <div class="d-flex align-items-center">
-            <img src="/public/images/icons/shamel-logo.jpeg" alt="S icon" style="width:10px;" class="me-1">
+            <img src="https://cdn-react.vezeeta.com/vezeeta-web-reactjs/jenkins-31/images/shamel-logo.webp" alt="S icon" style="width:10px;" class="me-1">
             <span style="font-size: 12px">60 EGP with shamel</span>
         </div>
 
