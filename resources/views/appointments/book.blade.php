@@ -77,50 +77,50 @@
                     {{-- </div>--}}
 
 
-                <script>
-                    document.addEventListener('DOMContentLoaded', function () {
-                        const container = document.querySelector('.horizontal-scroll-container');
-                        const scrollLeftBtn = document.getElementById('scrollLeftBtn');
-                        const scrollRightBtn = document.getElementById('scrollRightBtn');
-                        const itemWidth = container.querySelector('.card').offsetWidth + 16;
+{{--                <script>--}}
+{{--                    document.addEventListener('DOMContentLoaded', function () {--}}
+{{--                        const container = document.querySelector('.horizontal-scroll-container');--}}
+{{--                        const scrollLeftBtn = document.getElementById('scrollLeftBtn');--}}
+{{--                        const scrollRightBtn = document.getElementById('scrollRightBtn');--}}
+{{--                        const itemWidth = container.querySelector('.card').offsetWidth + 16;--}}
 
-                        scrollLeftBtn.addEventListener('click', () => {
-                            container.scrollBy({ left: -itemWidth, behavior: 'smooth' });
-                        });
+{{--                        scrollLeftBtn.addEventListener('click', () => {--}}
+{{--                            container.scrollBy({ left: -itemWidth, behavior: 'smooth' });--}}
+{{--                        });--}}
 
-                        scrollRightBtn.addEventListener('click', () => {
-                            container.scrollBy({ left: itemWidth, behavior: 'smooth' });
-                        });
+{{--                        scrollRightBtn.addEventListener('click', () => {--}}
+{{--                            container.scrollBy({ left: itemWidth, behavior: 'smooth' });--}}
+{{--                        });--}}
 
-                        // Clinic selection logic
-                        const clinicCards = document.querySelectorAll('.clinic-name');
-                        const selectedClinic = document.getElementById('selectedClinic');
-                        const clinicLocation = document.getElementById('clinicLocation');
+{{--                        // Clinic selection logic--}}
+{{--                        const clinicCards = document.querySelectorAll('.clinic-name');--}}
+{{--                        const selectedClinic = document.getElementById('selectedClinic');--}}
+{{--                        const clinicLocation = document.getElementById('clinicLocation');--}}
 
 
-                        clinicCards.forEach(card => {
-                            card.addEventListener('click', function () {
-                                const name = this.getAttribute('data-name');
-                                const city = this.getAttribute('data-city');
-                                const address = this.getAttribute('data-address');
-                                const clinicId = this.getAttribute('data-clinic-id');
+{{--                        clinicCards.forEach(card => {--}}
+{{--                            card.addEventListener('click', function () {--}}
+{{--                                const name = this.getAttribute('data-name');--}}
+{{--                                const city = this.getAttribute('data-city');--}}
+{{--                                const address = this.getAttribute('data-address');--}}
+{{--                                const clinicId = this.getAttribute('data-clinic-id');--}}
 
-                                // Update only the location text
-                                clinicLocation.textContent = `${city} : ${address}`;
+{{--                                // Update only the location text--}}
+{{--                                clinicLocation.textContent = `${city} : ${address}`;--}}
 
-                                // Update time slots
+{{--                                // Update time slots--}}
 
-                                // Highlight selected card
-                                clinicCards.forEach(c => c.classList.remove('selected-clinic'));
-                                this.classList.add('selected-clinic');
-                            });
-                        });
-                    });
-                </script>
+{{--                                // Highlight selected card--}}
+{{--                                clinicCards.forEach(c => c.classList.remove('selected-clinic'));--}}
+{{--                                this.classList.add('selected-clinic');--}}
+{{--                            });--}}
+{{--                        });--}}
+{{--                    });--}}
+{{--                </script>--}}
                 @if($doctor->clinics->count() > 1)
                     <!-- Choose a clinic -->
-                    <div class="flex items-center justify-between border-b pb-2 mb-2">
-                        <div class="flex items-center space-x-2">
+                    <div class="justify-between border-b pb-2 mb-2 flex items-center space-x-2">
+                            {{-- Choose a location section  --}}
                             <div class="p-3 d-flex align-items-start" style="vertical-align: middle">
                                 <!-- Location icon -->
                                 <div class="me-2">
@@ -133,28 +133,70 @@
                                     <div style="height:3px; background-color:red; width:10px; margin:4px auto;"></div>
                                 </div>
 
-                                <!-- Text content -->
+                                <!-- Text  -->
                                 <div style="color: #74746F; font-size: 14px; vertical-align: middle;">
                                     Choose a clinic
                                 </div>
                             </div>
-                        </div>
 
+                        {{-- Clinics Display--}}
                         <div class="d-flex align-items-center clinics-bar choose-clinic-section">
                             <button class="btn btn-primary me-2" id="scrollLeftBtn">&lt;</button>
                             <div class="horizontal-scroll-container flex-grow-1 overflow-auto d-flex flex-nowrap">
-                                @foreach($doctor->clinics as $index => $clinic)
-                                    <div class="card flex-shrink-0 me-3 clinic-name" data-name="{{ $clinic->clinic_name }}"
-                                        data-city="{{ $clinic->clinic_city }}" data-address="{{ $clinic->clinic_address }}"
-                                        data-clinicId="{{$clinic->clinic_id}}" style="width: 50%;">
-                                        <span>{{$clinic->clinic_name}}</span>
+                                @foreach($doctor->clinics as $index => $clinicItem)
+                                    <div class="card flex-shrink-0 me-3 clinic-name" data-name="{{ $clinicItem->clinic_name }}"
+                                        data-city="{{ $clinicItem->clinic_city }}" data-address="{{ $clinicItem->clinic_address }}"
+                                        data-clinicId="{{$clinicItem->id}}" style="width: 50%;">
+                                        <span>{{$clinicItem->clinic_name}}</span>
                                     </div>
+
                                 @endforeach
 
                             </div>
-
                             <button class="btn btn-primary ms-2" id="scrollRightBtn">&gt;</button>
                         </div>
+
+                        <script>
+                            document.addEventListener('DOMContentLoaded', function() {
+                                // Get doctorId and currentOffset from the Blade view
+                                const doctorId = {{ $doctor->id }};
+                                const currentOffset = {{ $offset }};
+                                const container = document.querySelector('.horizontal-scroll-container');
+                                const scrollLeftBtn = document.getElementById('scrollLeftBtn');
+                                const scrollRightBtn = document.getElementById('scrollRightBtn');
+                                const itemWidth = container.querySelector('.card').offsetWidth + 16;
+
+                                scrollLeftBtn.addEventListener('click', () => {
+                                    container.scrollBy({ left: -itemWidth, behavior: 'smooth' });
+                                });
+
+                                scrollRightBtn.addEventListener('click', () => {
+                                    container.scrollBy({ left: itemWidth, behavior: 'smooth' });
+                                });
+
+
+                            // Select all elements with the 'clinic-name' class
+                                document.querySelectorAll('.clinic-name').forEach(card => {
+                                    // Add a click event listener to each card
+                                    card.addEventListener('click', function() {
+                                        // Get the clinicId from the data attribute of the clicked card
+                                        const clinicId = this.dataset.clinicid;
+
+                                        // Debug
+                                        console.log('Redirecting to clinic ID:', clinicId);
+
+                                        // Construct the new URL using the correct route structure
+                                        // const newUrl = `/booking/${doctorId}/${clinicId}/${currentOffset}`;
+                                        const newUrl = `/booking/${doctorId}/${clinicId}`;
+                                        console.log(newUrl);
+
+                                        // Redirect the user to the new URL
+                                        window.location.href = newUrl;
+                                    });
+                                });
+                            });
+                        </script>
+
                         <hr class="my-2">
                         <div id="selectedClinic" class="mt-2" style="font-size: 14px; font-weight: bold; color: #333;">
                             <div class="p-3 d-flex align-items-start">
@@ -173,6 +215,7 @@
                                 <div class="clinic-info">
                                     <div class="clinic-location" id="clinicLocation">
                                         {{$clinic->clinic_city}} : {{$clinic->clinic_address}}
+{{--                                        Selected clinic: {{ $clinic->id }} → {{ $clinic->clinic_city }} : {{ $clinic->clinic_address }}--}}
                                     </div>
                                     <div class="book-now">
                                         Book now to receive the clinic’s address details and phone number

@@ -23,30 +23,28 @@ class AppointmentController extends Controller
         return view('appointments.index', compact('appointments'));
     }
 
-    public function showBookingForm($doctorId, $clinicId)
+    public function showBookingForm($doctorId, $clinicId, $offset = 0)
     {
-        // Displays the booking form for a specific doctor and specific clinic for the next 3 days
+        // get doctor and clinic
         $doctor = Doctor::findOrFail($doctorId);
+        $clinic = $doctor->clinics->firstWhere('id', $clinicId);
+//        $clinic = Clinic::findOrFail($clinicId);
 
-        // prepare 3 days (strings like "2025-08-12")
+        // prepare 3 days
         $dates = collect(range(0, 2))
-            ->map(fn($i) => Carbon::today()->addDays($i)->toDateString());
+            ->map(fn($i) => Carbon::today()->addDays($offset + $i)->toDateString());
 
-        // fetch only unbooked slots for these dates for this doctor
+        // fetch slots only for those dates
         $slots = AppointmentSlot::where('doctor_id', $doctor->id)
-            ->where('clinic_id', $clinicId)
-//            ->where('is_booked', false)
+            ->where('clinic_id', $clinic->id)
             ->whereIn('appointment_date', $dates->toArray())
             ->orderBy('appointment_date')
             ->orderBy('start_time')
             ->get();
-//        dd($doctor);
 
-//        dd($availableSlots->first());
+//        dd($clinic);
 
-        // pass everything to the view
-//        return view('appointments.book', compact('doctor', 'dates', 'slots', 'clinicId'));
-        return view('appointments.form', compact('doctor', 'dates', 'slots', 'clinicId'));
+        return view('appointments.form', compact('doctor', 'clinic', 'dates', 'slots', 'offset'));
 
     }
 
