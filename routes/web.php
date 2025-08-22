@@ -46,19 +46,10 @@ Route::prefix('admin')->group(function () {
 });
 
 
-Route::get('/booking/{id}/{clinic_id}/{offset}', [AppointmentController::class, 'showBookingForm'])->name('booking.show');
-
+Route::get('/booking/{id}/{clinic_id}/{offset}', [AppointmentController::class, 'showBookingForm'])
+    ->name('booking.show');
 Route::post('/appointments/book', [AppointmentController::class, 'store'])
     ->name('appointments.store');
-
-
-
-//Route::post('/appointments/slots-by-clinic', [AppointmentController::class, 'getSlotsByClinic'])
-//    ->name('appointments.slotsByClinic');
-Route::get('/booking/{doctorId}/{clinicId}', [AppointmentController::class, 'getSlots'])
-    ->name('booking.slots');
-
-
 Route::get('/appointments/confirm/{slot}', [AppointmentController::class, 'confirmBooking'])
     ->name('appointments.confirm');
 

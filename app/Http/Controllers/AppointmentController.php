@@ -102,7 +102,7 @@ class AppointmentController extends Controller
 
         $dates = $slots->pluck('appointment_date')->unique();
 
-//        return view('appointments.partials.slots', compact('dates', 'slots', 'clinicId'))->render();
+        return view('appointments.partials.slots', compact('dates', 'slots', 'clinicId'))->render();
     }
 
 
