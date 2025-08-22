@@ -46,7 +46,7 @@ Route::prefix('admin')->group(function () {
 });
 
 
-Route::get('/booking/{id}/{clinic_id}', [AppointmentController::class, 'showBookingForm'])->name('booking.show');
+Route::get('/booking/{id}/{clinic_id}/{offset}', [AppointmentController::class, 'showBookingForm'])->name('booking.show');
 
 Route::post('/appointments/book', [AppointmentController::class, 'store'])
     ->name('appointments.store');

@@ -232,14 +232,6 @@
 
 
 
-
-
-        .appointment-container p {
-            font-size: 18px;
-            font-weight: 600;
-            line-height: 50px;
-        }
-
         .appointment-container {
             text-align: center;
             display: flex;
@@ -249,15 +241,24 @@
             max-width: 100%;
         }
 
+        .appointment-container p {
+            font-size: 18px;
+            font-weight: 600;
+            line-height: 50px;
+        }
+
+
+
         .days {
             display: flex;
             justify-content: center;
             align-items: center;
 
-            !*margin-top: 0px;
-            * ! padding: 25px 48px;
+            /* margin-top: 0px; */
+            padding: 25px 48px;
             background-color: #F5F5F5;
         }
+
 
         .appointment-container .days {
             max-width: 100%;
@@ -382,7 +383,7 @@
 
 
         .time-slot-input {
-            */ display: none;
+            display: none;
         }
 
         .time-slot-label {
