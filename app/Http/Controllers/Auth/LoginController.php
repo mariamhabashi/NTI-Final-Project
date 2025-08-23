@@ -23,7 +23,7 @@ class LoginController extends Controller
         if (Auth::attempt($credentials, $request->filled('remember'))) {
             Auth::login(Auth::user());
             $request->session()->regenerate();
-            return redirect()->intended('/');
+            return redirect()->intended('/home/doctors');
         }
 
         return back()->withErrors([

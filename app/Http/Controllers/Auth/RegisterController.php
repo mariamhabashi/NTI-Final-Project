@@ -17,26 +17,24 @@ class RegisterController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'phone' => ['required', 'string', 'unique:users,phone'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
-            'gender' => ['required', 'in:male,female'],
-            'birth_date' => ['nullable', 'date'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-        ]);
+            $request->validate([
+                'name' => ['required', 'string', 'max:255'],
+                'phone' => ['required', 'string', 'unique:users,phone'],
+                'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
+                'gender' => ['required', 'in:male,female'],
+                'birth_date' => ['nullable', 'date'],
+                'password' => ['required', 'string', 'min:8', 'confirmed'],
+            ]);
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'phone' => $request->phone,
-            'gender' => $request->gender,
-            'birth_date' => $request->birth_date,
-            'password' => Hash::make($request->password),
-        ]);
+            User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'phone' => $request->phone,
+                'gender' => $request->gender,
+                'birth_date' => $request->birth_date,
+                'password' => Hash::make($request->password),
+            ]);
 
-        Auth::login($user);
-
-        return redirect('home')->with('success', 'You\'ve been registered successfully!');
+            return redirect('login')->with('success', 'Your account has been created, please login.');
     }
 }
