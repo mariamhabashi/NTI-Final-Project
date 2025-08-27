@@ -69,6 +69,7 @@ class DoctorController extends Controller
     public function search(Request $request)
     {
         $query = Doctor::query();
+        
 
         if ($request->has('name') && $request->name != '') {
             $query->where(function ($q) use ($request) {

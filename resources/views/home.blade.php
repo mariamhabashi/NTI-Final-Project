@@ -2,7 +2,7 @@
 
 @section('content')
 
-<!-- ===== Hero / Search Section ===== -->
+<!-- search Section -->
 <section class="hero bg-light text-center py-5">
     <div class="container">
         <h1 class="mb-4">Find the Best Doctors Near You</h1>
@@ -23,45 +23,28 @@
     </div>
 </section>
 
-<!-- ===== Featured Doctors ===== -->
+<!-- Featured Doctors Section -->
 <section class="featured-doctors container my-5">
-    <h2 class="mb-4 text-center">Featured Doctors</h2>
+    <h2 class="mb-4">Featured Doctors</h2>
     <div class="row">
-        @forelse($doctors as $doctor)
+        @foreach($doctors as $doctor)
             <div class="col-md-4 mb-4">
-                <div class="card shadow-sm text-center p-3">
-                    <div class="doctor-img-wrapper mx-auto mb-3">
-                        <img src="{{ $doctor->profile_pic 
-                                    ? asset('storage/' . $doctor->profile_pic) 
-                                    : asset('img/placeholder.png') }}"
-                             alt="{{ $doctor->first_name }} {{ $doctor->last_name }}"
-                             class="rounded-circle doctor-img">
-                    </div>
+                <div class="card shadow-sm">
+                    <img src="{{ $doctor->profile_pic 
+                                ? asset('storage/' . $doctor->profile_pic) 
+                                : asset('storage/img/clinic-medhat--higazi--dentistry_20250612192726555.jpg') }}"
+                        alt="{{ $doctor->first_name }} {{ $doctor->last_name }}"
+                        class="rounded-circle"
+                        width="80"
+                        height="80">
                     <div class="card-body">
-                        <h5 class="card-title">{{ $doctor->first_name }} {{ $doctor->last_name }}</h5>
+                        <h5 class="card-title">{{ $doctor->first_name }}  {{ $doctor->last_name }}</h5>
                         <p class="card-text">{{ $doctor->specialty }}</p>
-                        <p class="card-text">{{ $doctor->city }}</p>
                         <a href="{{ route('doctors.show', $doctor->id) }}" class="btn btn-success">Book Now</a>
                     </div>
                 </div>
             </div>
-        @empty
-            <p class="text-center">No doctors found. Try searching above.</p>
-        @endforelse
-    </div>
-</section>
-
-<!-- ===== Popular Specialties ===== -->
-<section class="popular-specialties bg-light py-5">
-    <div class="container text-center">
-        <h2 class="mb-4">Popular Specialties</h2>
-        <div class="row justify-content-center">
-            @foreach($specialties as $spec)
-                <div class="col-md-2 mb-3">
-                    <a href="{{ route('doctors.search', ['specialty' => $spec]) }}" class="btn btn-outline-primary w-100">{{ $spec }}</a>
-                </div>
-            @endforeach
-        </div>
+        @endforeach
     </div>
 </section>
 
@@ -89,4 +72,3 @@
 
 @endsection
 
-   

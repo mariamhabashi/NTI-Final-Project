@@ -1,6 +1,6 @@
 <nav id="mainNavigation" class="navbar navbar-expand-lg navbar-dark shadow-sm">
     <div class="container">
-        <a class="navbar-brand d-flex align-items-center" href="#">
+        <a class="navbar-brand d-flex align-items-center" href="{{ url('/') }}">
             <img src="{{ asset('storage/img/vezeeta_logo.jpg') }}" alt="Logo">
         </a>
 
@@ -42,7 +42,7 @@
                     <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">Login</a></li>
                 @endguest
                 <li class="nav-item"><a class="nav-link active" href="#">Vezeeta For Doctors</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Contact Us</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ route('contact') }}">Contact Us</a></li>
                 @auth
                     <li class="nav-item">
                         <form action="{{ route('logout') }}" method="POST">

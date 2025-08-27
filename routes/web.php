@@ -7,10 +7,15 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ContactController;
+
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('home');
+    // view('welcome');
 });
+
 
 Route::get('register', [RegisterController::class, 'create'])->name('register');
 Route::post('register', [RegisterController::class, 'store']);
@@ -20,6 +25,7 @@ Route::post('/login', [LoginController::class, 'login']);
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::prefix('home')->group(function(){
+    Route::get('/', [HomeController::class,'dashboard'])->name('home');
     Route::get('/{user}/my-profile', [UserController::class,'index'])->name('my-profile');
     Route::post('/my-profile', [UserController::class,'update'])->name('my-profile.update');
     Route::get('/doctors',[DoctorController::class,'index'])->name('doctors.index');
@@ -28,6 +34,8 @@ Route::prefix('home')->group(function(){
     Route::get('/doctors/{doctor}/show',[DoctorController::class,'showSingleDr'])->name('doctors.show');
     // Route::get('/appointments/register/{doctor}/{time}',[AppointmentController::class,''])->name('appointments.register');
     Route::get('/appointments/register',[DoctorController::class,'showSingleDr'])->name('appointments.register');
+    Route::get('/contact',[ContactController::class,'index'])->name('contact');
+    Route::post('/contact/send',[ContactController::class,'sendMail'])->name('contact.send');
 });
 
 // Authenticated user routes

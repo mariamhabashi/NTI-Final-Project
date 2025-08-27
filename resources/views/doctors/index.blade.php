@@ -42,7 +42,7 @@
                         <div class="row align-items-center">
                             <!-- Doctor Image -->
                             <div class="col-auto">
-                                <img src="{{ $doctor->profile_pic ? asset('storage/' . $doctor->profile_pic) : 'https://via.placeholder.com/100' }}"
+                                <img src="{{ $doctor->profile_pic ? asset('storage/' . $doctor->profile_pic) : asset('storage/img/clinic-medhat--higazi--dentistry_20250612192726555.jpg') }}"
                                      alt="{{ $doctor->first_name }} {{ $doctor->last_name }}"
                                      class="rounded-circle" width="80" height="80">
                             </div>
@@ -83,7 +83,7 @@
                             <div class="col-auto d-flex gap-2">
                                 <a href="{{ route('doctors.show', ['doctor' => $doctor->id]) }}" class="btn btn-outline-primary btn-sm">Info</a>
                                 @if($doctor->clinics->isNotEmpty())
-                                    <a href="{{ route('booking.show', ['id' => $doctor->id, 'clinic_id' => $doctor->clinics->first()->id]) }}"
+                                    <a href="{{ route('booking.show', ['id' => $doctor->id, 'clinic_id' => $doctor->clinics->first()->id ,'offset'=>0 ]) }}"
                                        class="btn btn-primary btn-sm">
                                         Book Now
                                     </a>

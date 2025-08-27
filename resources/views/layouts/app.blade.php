@@ -26,7 +26,7 @@
         }
 
         /* NAVBAR */
-        #mainNavigation {
+        #mainNavigation,.foot {
             background-color: #0070cd;
         }
 
@@ -432,6 +432,24 @@
             min-width: 0;
             max-width: 900px;
         }
+
+        .doctor-img-wrapper {
+        width: 120px;
+        height: 120px;
+        overflow: hidden;
+        border-radius: 50%;
+        margin: 0 auto;
+    }
+    .doctor-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .hero input.form-control, .hero button.btn-primary {
+        height: 50px;
+        font-size: 1rem;
+    }
+
 
         .doctor-card-vezeeta {
             display: flex;
