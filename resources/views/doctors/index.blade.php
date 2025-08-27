@@ -8,26 +8,41 @@
         <div class="col-md-3">
             <form action="{{ route('doctors.search') }}" method="GET" class="filter-sidebar border rounded bg-white p-4">
                 <h5>Filter by:</h5>
+                {{-- Doctor Name --}}
                 <div class="mb-3">
                     <label for="name" class="form-label">Doctor Name</label>
                     <input type="text" name="name" id="name" class="form-control" placeholder="Enter name">
                 </div>
+                {{-- Specialty --}}
                 <div class="mb-3">
                     <label for="specialty" class="form-label">Speciality</label>
                     <select name="specialty" id="specialty" class="form-select">
                         <option value="">All Specialties</option>
-                        <option value="Cardiology">Cardiology</option>
-                        <option value="Dermatology">Dermatology</option>
-                        <option value="Neurology">Neurology</option>
-                        <option value="Pediatrics">Pediatrics</option>
+                       @php
+                        $specialties = ['Cardiology', 'Dermatology', 'Neurology', 'Pediatrics', 'Psychiatry', 'Radiology', 'General Surgery', 'Orthopedics', 'Ophthalmology', 'ENT', 'Gynecology', 'Urology', 'Gastroenterology', 'Endocrinology', 'Rheumatology', 'Oncology', 'Nephrology', 'Hematology', 'Infectious Disease', 'Pulmonology'];
+                       @endphp
+                       @foreach($specialties as $spec)
+                    <option value="{{ $spec }}" {{ request('specialty') == $spec ? 'selected' : '' }}>
+                        {{ $spec }}
+                    </option>
+                       @endforeach
                     </select>
                 </div>
+
+                {{-- City --}}
                 <div class="mb-3">
                     <label for="city" class="form-label">City</label>
                     <select name="city" id="city" class="form-select">
                         <option value="">All Cities</option>
-                        <option value="Cairo">Cairo</option>
-                        <option value="Alexandria">Alexandria</option>
+                            @php
+                                $cities = ['Cairo','Alexandria'];
+                            @endphp
+                            @foreach($cities as $city)
+                                <option value="{{ $city }}" {{ request('city') == $city ? 'selected' : '' }}>
+                                    {{ $city }}
+                                </option>
+                            @endforeach
+
                     </select>
                 </div>
                 <button type="submit" class="btn btn-primary w-100">Search</button>

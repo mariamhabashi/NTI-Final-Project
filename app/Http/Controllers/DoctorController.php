@@ -87,8 +87,11 @@ class DoctorController extends Controller
         }
 
         $doctors = $query->get();
+        $specialties = Doctor::select('specialty')->distinct()->pluck('specialty');
+        $cities = Doctor::select('city')->distinct()->pluck('city');
 
-        return view('doctors.search', compact('doctors'));
+
+    return view('doctors.search', compact('doctors', 'specialties', 'cities'));
     }
 
 }

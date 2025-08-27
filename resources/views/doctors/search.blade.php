@@ -33,9 +33,10 @@
                     <div class="doctor-img-wrapper mx-auto mb-3">
                         <img src="{{ $doctor->profile_pic 
                                     ? asset('storage/' . $doctor->profile_pic) 
-                                    : asset('img/placeholder.png') }}"
+                                    : asset('storage/img/clinic-medhat--higazi--dentistry_20250612192726555.jpg') }}"
                              alt="{{ $doctor->first_name }} {{ $doctor->last_name }}"
-                             class="rounded-circle doctor-img">
+                             class="rounded-circle doctor-img"
+                             style="width: 120px; height: 120px; object-fit: cover;">
                     </div>
                     <div class="card-body">
                         <h5 class="card-title">{{ $doctor->first_name }} {{ $doctor->last_name }}</h5>
@@ -43,6 +44,7 @@
                         <p class="card-text">{{ $doctor->city }}</p>
                         <a href="{{ route('doctors.show', $doctor->id) }}" class="btn btn-success">Book Now</a>
                     </div>
+                
                 </div>
             </div>
         @empty
