@@ -1,6 +1,6 @@
 <nav id="mainNavigation" class="navbar navbar-expand-lg navbar-dark shadow-sm">
     <div class="container">
-        <a class="navbar-brand d-flex align-items-center" href="{{ url('/') }}">
+        <a class="navbar-brand d-flex align-items-center" href="{{ isset(auth()->user()->is_admin) && auth()->user()->is_admin ? route('admin.doctors.index') : url('/') }}">
             <img src="{{ asset('storage/img/vezeeta_logo.jpg') }}" alt="Logo">
         </a>
 
@@ -12,15 +12,20 @@
         <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
             <ul class="navbar-nav">
                  @auth
+                 
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                            data-bs-toggle="dropdown" aria-expanded="false">
                             {{ auth()->user()->name }}
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            @if(auth()->user()->is_admin)
+                                <li><a class="dropdown-item" href="{{ route('admin.doctors.index') }}">Admin Dashboard</a></li>
+                            @else
                             <li><a class="dropdown-item" href="{{ route('my-profile', auth()->user()) }}">My Profile</a></li>
                             <li><a class="dropdown-item" href="{{ route('appointments.index') }}">My Appointments</a></li>
                             <li><a class="dropdown-item" href="#">My Insurance</a></li>
+                            @endif
                             <li>
                                 <form action="{{ route('logout') }}" method="POST">
                                     @csrf
