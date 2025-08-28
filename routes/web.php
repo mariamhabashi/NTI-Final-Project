@@ -42,6 +42,12 @@ Route::prefix('home')->group(function(){
 // Member 5: User Bookings Page
 Route::middleware(['auth'])->group(function () {
     Route::get('/my-appointments', [AppointmentController::class, 'index'])->name('appointments.index');
+    Route::get('/booking/{id}/{clinic_id}/{offset}', [AppointmentController::class, 'showBookingForm'])
+        ->name('booking.show');
+    Route::post('/appointments/book', [AppointmentController::class, 'store'])
+        ->name('appointments.store');
+    Route::get('/appointments/confirm/{slot}', [AppointmentController::class, 'confirmBooking'])
+        ->name('appointments.confirm');
 });
 // Member 6: Admin Panel for Doctors
 Route::prefix('admin')->group(function () {
@@ -54,12 +60,6 @@ Route::prefix('admin')->group(function () {
 });
 
 
-Route::get('/booking/{id}/{clinic_id}/{offset}', [AppointmentController::class, 'showBookingForm'])
-    ->name('booking.show');
-Route::post('/appointments/book', [AppointmentController::class, 'store'])
-    ->name('appointments.store');
-Route::get('/appointments/confirm/{slot}', [AppointmentController::class, 'confirmBooking'])
-    ->name('appointments.confirm');
 
 
 // require __DIR__.'\..\auth.php';
