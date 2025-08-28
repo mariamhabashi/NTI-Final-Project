@@ -80,7 +80,7 @@ class AppointmentController extends Controller
         Appointment::create([
             'user_id' => Auth::id(),
             'doctor_id' => $slot->doctor_id,
-            'appointment_slot_id' => $slot->id,
+            'slot_id' => $slot->id,
             'appointment_date' => $slot->appointment_date,
             'appointment_time' => $slot->start_time,
         ]);
