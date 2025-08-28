@@ -214,7 +214,7 @@
                             $slotList[] = [
                                 'label' => $timeLabel,
                                 'free' => true,
-                                'url' => route('booking.show', ['id' => $doctor->id, 'clinic_id' => $slot->clinic_id])
+                                'url' => route('booking.show', ['id' => $doctor->id, 'clinic_id' => $slot->clinic_id, 'offset' => 0])
                             ];
                         }
 
