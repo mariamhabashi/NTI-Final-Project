@@ -13,14 +13,8 @@ The system replicates the core features of Vezeeta: patients can search for doct
 - View doctor details and available slots  
 - Book and manage appointments  
 
-### Doctor Side
-- Manage personal profile and availability  
-- View scheduled appointments  
-
 ### Admin Side
 - Add and manage doctors  
-- Manage appointments and patient records  
-- Access admin dashboard with system overview  
 
 ---
 
