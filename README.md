@@ -33,46 +33,6 @@ The system replicates the core features of Vezeeta: patients can search for doct
 
 ---
 
-## Installation
-
-1. Clone the repository  
-   ```bash
-   git clone https://github.com/your-username/doctor-reservation-system.git
-   cd doctor-reservation-system
-````
-
-2. Install dependencies
-
-   ```bash
-   composer install
-   npm install && npm run dev
-   ```
-
-3. Configure environment
-
-   * Copy `.env.example` to `.env`
-   * Set database credentials
-
-4. Run migrations and seeders
-
-   ```bash
-   php artisan migrate --seed
-   ```
-
-5. Start development server
-
-   ```bash
-   php artisan serve
-   ```
-
----
-
-## Screenshots
-
-*Add screenshots here (Patient Dashboard, Doctor Profile, Admin Panel).*
-
----
-
 ## Contributors
 
 This project was developed by a **team of 4 members** as part of NTI training.
