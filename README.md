@@ -46,9 +46,4 @@ This project was developed by a **team of 4 members** as part of NTI training.
 
 ## License
 
-This project is for educational and training purposes only.
-
-```
-
-Do you want me to also add a **demo section** (like “Live Demo” or “Video Walkthrough”) in case later you deploy it or upload a screen recording?
-```
+This project is for educational and training purposes.
